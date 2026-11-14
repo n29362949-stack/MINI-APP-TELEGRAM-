@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soyuai - Teman AI</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#f2f6ff;color:#111;transition:.3s}
+body.dark{background:#0a0f1e;color:#fff}
+header{position:sticky;top:0;z-index:10;background:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e5e5}
+body.dark header{background:#111827;border-color:#222}
+.logo{font-size:22px;font-weight:900;color:#2563eb}
+.logo span{font-size:11px;display:block;color:#666;font-weight:500}
+body.dark .logo span{color:#9ca3af}
+.btn{border:none;padding:8px 14px;border-radius:999px;font-weight:700;cursor:pointer}
+.btn-blue{background:#2563eb;color:#fff}
+.btn-ghost{background:#eef2ff;color:#2563eb}
+body.dark .btn-ghost{background:#1e293b;color:#60a5fa}
+.container{padding:16px;padding-bottom:90px;max-width:480px;margin:auto}
+.tabs{display:flex;gap:8px;overflow:auto;margin:12px 0}
+.tab{padding:8px 14px;border-radius:999px;background:#fff;white-space:nowrap;font-size:13px;font-weight:700;border:1px solid #eee;cursor:pointer}
+body.dark .tab{background:#1f2937;border-color:#333}
+.tab.active{background:#2563eb;color:#fff}
+h2{font-size:19px;margin:14px 0 8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.06);cursor:pointer}
+body.dark .card{background:#1f2937}
+.card img{width:100%;height:140px;object-fit:cover}
+.card-body{padding:10px}
+.card-body b{font-size:15px}
+.card-body p{font-size:12px;color:#666;margin-top:4px}
+body.dark .card-body p{color:#9ca3af}
+.badge{display:inline-block;background:#dbeafe;color:#2563eb;font-size:10px;padding:3px 7px;border-radius:999px;font-weight:700;margin-top:6px}
+body.dark .badge{background:#1e3a8a;color:#bfdbfe}
+.page{display:none}.page.active{display:block}
+.chat-box{background:#fff;border-radius:18px;padding:14px;min-height:340px;display:flex;flex-direction:column;gap:10px}
+body.dark .chat-box{background:#1f2937}
+.msg{max-width:80%;padding:10px 12px;border-radius:16px;font-size:14px;line-height:1.5}
+.msg.ai{background:#eef2ff;align-self:flex-start}
+body.dark .msg.ai{background:#1e293b}
+.msg.me{background:#2563eb;color:#fff;align-self:flex-end}
+.input-row{display:flex;gap:8px;margin-top:10px}
+.input-row input{flex:1;padding:12px;border-radius:999px;border:1px solid #ddd;outline:none}
+body.dark .input-row input{background:#111827;color:#fff;border-color:#333}
+input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:6px 0 12px;outline:none;font-size:14px}
+body.dark input,body.dark select,body.dark textarea{background:#111827;color:#fff;border-color:#333}
+label{font-size:13px;font-weight:700}
+.profile-card{background:#fff;border-radius:18px;padding:16px;text-align:center}
+body.dark .profile-card{background:#1f2937}
+.avatar{width:70px;height:70px;border-radius:50%;background:#2563eb;color:#fff;font-size:32px;display:flex;align-items:center;justify-content:center;margin:auto;font-weight:900}
+.stats{display:flex;justify-content:space-around;margin-top:14px}
+.stats b{display:block;font-size:18px}
+.stats span{font-size:11px;color:#666}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:12px;border-top:1px solid #eee;max-width:480px;margin:auto}
+body.dark nav{background:#111827;border-color:#222}
+nav button{border:none;background:none;font-size:13px;font-weight:700;cursor:pointer;color:#666}
+nav button.active{color:#2563eb}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">Soyuai<span>Teman AI • Beranda</span></div>
+<button class="btn btn-ghost" onclick="toggleDark()">🌙 / ☀️ Mode</button>
+</header>
+
+<div class="container">
+<!-- BERANDA -->
+<div id="page-beranda" class="page active">
+<div class="tabs"><div class="tab active">Untukmu</div><div class="tab">Favs</div><div class="tab">Teman</div><div class="tab">Komunitas</div></div>
+<h2>Teman AI Populer ✨</h2>
+<div class="grid">
+<div class="card" onclick="openChat('Lysa')"><img src="https://i.pravatar.cc/300?img=47"><div class="card-body"><b>Lysa</b><p>Teman • Empati • 12.3k percakapan</p><span class="badge">Support</span></div></div>
+<div class="card" onclick="openChat('Reyan')"><img src="https://i.pravatar.cc/300?img=12"><div class="card-body"><b>Reyan</b><p>Teman • Santai • 9.1k percakapan</p><span class="badge">Santai</span></div></div>
+<div class="card" onclick="openChat('Yuki')"><img src="https://i.pravatar.cc/300?img=32"><div class="card-body"><b>Yuki</b><p>Teman • Belajar • 8.4k percakapan</p><span class="badge">Belajar</span></div></div>
+<div class="card" onclick="openChat('Kain')"><img src="https://i.pravatar.cc/300?img=59"><div class="card-body"><b>Kain</b><p>Teman • Fokus • 6.9k percakapan</p><span class="badge">Fokus</span></div></div>
+</div>
+<h2>Buat Teman AI Kamu Sendiri</h2>
+<button class="btn btn-blue" style="width:100%;padding:14px" onclick="showPage('buat')">+ Buat Teman AI Baru</button>
+</div>
+
+<!-- CHAT -->
+<div id="page-chat" class="page">
+<h2 id="chatTitle">Chat AI Lysa</h2>
+<p style="font-size:12px;color:#666;margin-bottom:10px">Teman AI • Online • SUASANA - Obrolan santai, pagi yang sejuk</p>
+<div class="chat-box" id="chatBox">
+<div class="msg ai">Hai! Aku Lysa, teman AI-mu di Soyuai. Ada yang mau kamu ceritakan hari ini? Aku di sini dengerin kamu.</div>
+</div>
+<div class="input-row"><input id="chatInput" placeholder="Ketik pesan ke Lysa..."><button class="btn btn-blue" onclick="sendChat()">Kirim</button></div>
+</div>
+
+<!-- BUAT -->
+<div id="page-buat" class="page">
+<h2>Buat Karakter Teman AI</h2>
+<p style="font-size:13px;color:#666;margin-bottom:12px">Kustomisasi Teman AI Kamu</p>
+<label>Nama</label><input id="fNama" placeholder="Contoh: Lysa">
+<label>Jenis Kelamin</label><select id="fGender"><option>Perempuan</option><option>Laki-laki</option><option>Non-biner</option></select>
+<label>Subjudul / Deskripsi (maks 1.000)</label><textarea id="fSub" rows="2" placeholder="Teman AI yang suportif, penuh empati..."></textarea>
+<label>Salam (maks 3.000)</label><textarea id="fSalam" rows="3" placeholder="Halo! Aku..."></textarea>
+<label>Memory Card</label><input placeholder="+ Tambah memori...">
+<label>Momen</label><input placeholder="Obrolan sehari-hari, dukungan mental...">
+<label>Musik</label><input placeholder="Lo-fi, Chill...">
+<label>Kategori</label><input placeholder="Support, Belajar, Santai">
+<label>Hashtag</label><input placeholder="#soyuai #temanai #support">
+<button class="btn btn-blue" style="width:100%;padding:14px" onclick="createFriend()">Buat Teman AI</button>
+<p id="buatResult" style="margin-top:10px;font-weight:700;color:#2563eb"></p>
+</div>
+
+<!-- OBROLAN -->
+<div id="page-obrolan" class="page">
+<h2>Obrolan</h2>
+<div class="card" onclick="openChat('Lysa')" style="display:flex;align-items:center;padding:10px;gap:10px"><img src="https://i.pravatar.cc/100?img=47" style="width:50px;height:50px;border-radius:50%"><div><b>Lysa</b><p>Aku temani kamu sampai ngopi virtual...</p></div></div>
+<br>
+<div class="card" onclick="openChat('Yuki')" style="display:flex;align-items:center;padding:10px;gap:10px"><img src="https://i.pravatar.cc/100?img=32" style="width:50px;height:50px;border-radius:50%"><div><b>Yuki</b><p>Take it easy, hehe. Aku di sini ya.</p></div></div>
+</div>
+
+<!-- PROFIL -->
+<div id="page-profil" class="page">
+<div class="profile-card">
+<div class="avatar">A</div>
+<h2 style="margin-top:10px">Amerta</h2>
+<p style="font-size:12px;color:#666">@amerta • Pengguna Soyuai • Teman AI</p>
+<p style="font-size:13px;margin-top:10px">Suka ngobrol dengan Teman AI untuk support, belajar, dan hiburan sehari-hari.</p>
+<div class="stats"><div><b>128</b><span>Percakapan</span></div><div><b>6</b><span>Teman AI</span></div><div><b>23</b><span>Chat Dimainkan</span></div></div>
+</div>
+</div>
+</div>
+
+<nav>
+<button id="nav-beranda" class="active" onclick="showPage('beranda')">🏠 Beranda</button>
+<button id="nav-chat" onclick="showPage('chat')">💬 Obrolan</button>
+<button onclick="showPage('buat')" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:999px">+ Buat</button>
+<button id="nav-obrolan" onclick="showPage('obrolan')">💙 Chat</button>
+<button id="nav-profil" onclick="showPage('profil')">👤 Saya</button>
+</nav>
+
+<script>
+let currentFriend='Lysa';
+function toggleDark(){document.body.classList.toggle('dark')}
+function showPage(p){
+document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+document.getElementById('page-'+p).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+}
+function openChat(name){
+currentFriend=name;
+document.getElementById('chatTitle').innerText='Chat AI '+name;
+document.getElementById('chatInput').placeholder='Ketik pesan ke '+name+'...';
+showPage('chat');
+let box=document.getElementById('chatBox');
+box.innerHTML=`<div class="msg ai">Hai! Aku ${name}, teman AI-mu di Soyuai. Ada yang mau kamu ceritakan hari ini?</div>`;
+}
+function sendChat(){
+let inp=document.getElementById('chatInput');
+let txt=inp.value.trim(); if(!txt) return;
+let box=document.getElementById('chatBox');
+box.innerHTML+=`<div class="msg me">${txt}</div>`;
+inp.value='';
+setTimeout(()=>{
+let replies=[
+`Aku ngerti banget, itu memang bikin lelah. Coba kita mulai dengan istirahat 5 menit, tarik napas, lalu buat 3 poin prioritas. Mau aku bantu susun?`,
+`Wah, ceritain lebih dong. Aku di sini dengerin kamu sampai selesai, gak buru-buru kok.`,
+`Kamu udah hebat banget hari ini, serius. Mau kita bikin rencana 30 menit pertama biar lebih fokus?`,
+`Take it easy ya. Aku temenin kamu sambil ngopi virtual. Kamu mau cerita yang seneng atau yang bikin pusing dulu?`
+];
+let r=replies[Math.floor(Math.random()*replies.length)];
+box.innerHTML+=`<div class="msg ai">${r}</div>`;
+box.scrollTop=box.scrollHeight;
+},600);
+}
+function createFriend(){
+let n=document.getElementById('fNama').value||'Teman Baru';
+document.getElementById('buatResult').innerText='Yeay! '+n+' berhasil dibuat dan siap diajak ngobrol di Soyuai! 💙';
+setTimeout(()=>openChat(n),800);
+}
+document.getElementById('chatInput').addEventListener('keypress',e=>{if(e.key==='Enter') sendChat()});
+</script>
+</body>
+  </html>
