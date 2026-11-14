@@ -1,179 +1,125 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soyuai - Teman AI</title>
+<html lang="id"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOYUAI</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:#f2f6ff;color:#111;transition:.3s}
-body.dark{background:#0a0f1e;color:#fff}
-header{position:sticky;top:0;z-index:10;background:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e5e5e5}
-body.dark header{background:#111827;border-color:#222}
-.logo{font-size:22px;font-weight:900;color:#2563eb}
-.logo span{font-size:11px;display:block;color:#666;font-weight:500}
-body.dark .logo span{color:#9ca3af}
-.btn{border:none;padding:8px 14px;border-radius:999px;font-weight:700;cursor:pointer}
-.btn-blue{background:#2563eb;color:#fff}
-.btn-ghost{background:#eef2ff;color:#2563eb}
-body.dark .btn-ghost{background:#1e293b;color:#60a5fa}
-.container{padding:16px;padding-bottom:90px;max-width:480px;margin:auto}
-.tabs{display:flex;gap:8px;overflow:auto;margin:12px 0}
-.tab{padding:8px 14px;border-radius:999px;background:#fff;white-space:nowrap;font-size:13px;font-weight:700;border:1px solid #eee;cursor:pointer}
-body.dark .tab{background:#1f2937;border-color:#333}
-.tab.active{background:#2563eb;color:#fff}
-h2{font-size:19px;margin:14px 0 8px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.06);cursor:pointer}
-body.dark .card{background:#1f2937}
-.card img{width:100%;height:140px;object-fit:cover}
-.card-body{padding:10px}
-.card-body b{font-size:15px}
-.card-body p{font-size:12px;color:#666;margin-top:4px}
-body.dark .card-body p{color:#9ca3af}
-.badge{display:inline-block;background:#dbeafe;color:#2563eb;font-size:10px;padding:3px 7px;border-radius:999px;font-weight:700;margin-top:6px}
-body.dark .badge{background:#1e3a8a;color:#bfdbfe}
-.page{display:none}.page.active{display:block}
-.chat-box{background:#fff;border-radius:18px;padding:14px;min-height:340px;display:flex;flex-direction:column;gap:10px}
-body.dark .chat-box{background:#1f2937}
-.msg{max-width:80%;padding:10px 12px;border-radius:16px;font-size:14px;line-height:1.5}
-.msg.ai{background:#eef2ff;align-self:flex-start}
-body.dark .msg.ai{background:#1e293b}
-.msg.me{background:#2563eb;color:#fff;align-self:flex-end}
-.input-row{display:flex;gap:8px;margin-top:10px}
-.input-row input{flex:1;padding:12px;border-radius:999px;border:1px solid #ddd;outline:none}
-body.dark .input-row input{background:#111827;color:#fff;border-color:#333}
-input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #ddd;margin:6px 0 12px;outline:none;font-size:14px}
-body.dark input,body.dark select,body.dark textarea{background:#111827;color:#fff;border-color:#333}
-label{font-size:13px;font-weight:700}
-.profile-card{background:#fff;border-radius:18px;padding:16px;text-align:center}
-body.dark .profile-card{background:#1f2937}
-.avatar{width:70px;height:70px;border-radius:50%;background:#2563eb;color:#fff;font-size:32px;display:flex;align-items:center;justify-content:center;margin:auto;font-weight:900}
-.stats{display:flex;justify-content:space-around;margin-top:14px}
-.stats b{display:block;font-size:18px}
-.stats span{font-size:11px;color:#666}
-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:12px;border-top:1px solid #eee;max-width:480px;margin:auto}
-body.dark nav{background:#111827;border-color:#222}
-nav button{border:none;background:none;font-size:13px;font-weight:700;cursor:pointer;color:#666}
-nav button.active{color:#2563eb}
-</style>
-</head>
-<body>
-<header>
-<div class="logo">Soyuai<span>Teman AI • Beranda</span></div>
-<button class="btn btn-ghost" onclick="toggleDark()">🌙 / ☀️ Mode</button>
-</header>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{background:#0f0f12;color:#fff;padding-bottom:88px;font-size:15px}
+header{position:sticky;top:0;background:#0f0f12;z-index:20;padding:12px 16px 8px}
+.toptabs{display:flex;justify-content:center;gap:28px;font-size:19px;font-weight:800}
+.toptabs span{color:#888;cursor:pointer;padding-bottom:6px}
+.toptabs span.on{color:#fff;border-bottom:3px solid #fff}
+.search{display:flex;gap:8px;background:#2a2a2e;border-radius:999px;padding:11px 14px;margin:12px 0}
+.search input{background:none;border:0;outline:0;color:#fff;width:100%}
+.chips{display:flex;gap:18px;overflow-x:auto;white-space:nowrap;padding:2px 16px 12px}
+.chips b{color:#888;cursor:pointer}
+.chips b.on{color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 12px}
+.card{background:#1c1c20;border-radius:14px;overflow:hidden;cursor:pointer}
+.card img{width:100%;height:220px;object-fit:cover}
+.card .in{padding:10px}
+.card p{font-size:12.5px;color:#aaa;line-height:1.35;margin:5px 0 8px}
+.tag{background:#2c2c30;color:#ccc;font-size:11px;padding:5px 9px;border-radius:8px;margin:2px;display:inline-block}
+.page{display:none}
+.page.on{display:block}
+input,textarea,select{width:100%;background:#2a2a2e;border:0;color:#fff;padding:13px;border-radius:12px;margin:6px 0 12px;outline:0}
+label{font-weight:700;font-size:13px}
+.btn{width:100%;padding:14px;border:0;background:#7c6cff;color:#fff;font-weight:800;border-radius:999px}
+.btn2{background:#2a2a2e;color:#fff;border:0;padding:10px 16px;border-radius:999px}
+.btnY{background:#d4e157;color:#000;border:0;padding:14px;border-radius:999px;font-weight:800;width:100%}
+.chat-item{display:flex;gap:12px;padding:13px 16px;cursor:pointer;border-bottom:1px solid #222}
+.chat-item img{width:56px;height:56px;border-radius:14px;object-fit:cover}
+.bubble{background:#2a2a2e;padding:13px 15px;border-radius:16px;margin:10px 0;line-height:1.55;white-space:pre-line}
+.me{background:#7c6cff;margin-left:auto}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:#16161a;display:flex;justify-content:space-around;align-items:center;padding:10px 10px 14px;border-top:1px solid #26262b;z-index:30}
+.bottom button{border:0;background:none;color:#aaa;font-size:22px;position:relative}
+.bottom button.on{color:#fff}
+.plus{width:56px!important;height:56px;background:#fff!important;color:#000!important;border-radius:50%!important;font-size:30px!important}
+.badge{position:absolute;top:-4px;right:-8px;background:#ff3b30;color:#fff;font-size:11px;width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.pill{background:#2a2a2e;padding:9px 14px;border-radius:999px;cursor:pointer;display:inline-block;margin:4px}
+.pill.on{background:#d4e157;color:#000}
+.owner{background:linear-gradient(90deg,#f5c518,#ff8a00);color:#000;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;display:inline-block}
+.avatarBox{width:180px;height:240px;background:#2a2a2e;border-radius:16px;margin:10px auto;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden}
+.avatarBox img{width:100%;height:100%;object-fit:cover}
+.gender{display:flex;gap:10px}
+.gender div{flex:1;background:#2a2a2e;padding:12px;border-radius:12px;text-align:center;cursor:pointer}
+.gender div.on{outline:2px solid #d4e157}
+.styleImg{width:110px;height:150px;object-fit:cover;border-radius:12px;cursor:pointer}
+.styleImg.on{outline:3px solid #d4e157}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;display:none;align-items:flex-end}
+.modal.on{display:flex}
+.sheet{background:#1c1c20;width:100%;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:18px;padding-bottom:30px}
+.setrow{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid #222;cursor:pointer}
+.toggle{width:48px;height:28px;background:#333;border-radius:999px;position:relative}
+.toggle:after{content:'';position:absolute;width:24px;height:24px;background:#fff;border-radius:50%;top:2px;left:2px;transition:.2s}
+.toggle.on{background:#7c6cff}.toggle.on:after{left:22px}
+.starCard{background:#1c1c20;border-radius:14px;padding:16px;text-align:center}
+.starBtn{background:#f5c518;border:0;padding:10px;border-radius:999px;font-weight:800;width:100%;margin-top:10px}
+.editAvatar{width:120px;height:120px;border-radius:50%;object-fit:cover;margin:10px auto;display:block;position:relative}
+</style></head><body>
+<header><div class="toptabs"><span id="tabLang" onclick="showLang()">Langganan</span><span id="tabEks" class="on" onclick="showEks()">Eksplor</span></div><div class="search">🔍 <input id="cari" placeholder="Cari karakter..." oninput="render()"></div></header>
 
-<div class="container">
-<!-- BERANDA -->
-<div id="page-beranda" class="page active">
-<div class="tabs"><div class="tab active">Untukmu</div><div class="tab">Favs</div><div class="tab">Teman</div><div class="tab">Komunitas</div></div>
-<h2>Teman AI Populer ✨</h2>
-<div class="grid">
-<div class="card" onclick="openChat('Lysa')"><img src="https://i.pravatar.cc/300?img=47"><div class="card-body"><b>Lysa</b><p>Teman • Empati • 12.3k percakapan</p><span class="badge">Support</span></div></div>
-<div class="card" onclick="openChat('Reyan')"><img src="https://i.pravatar.cc/300?img=12"><div class="card-body"><b>Reyan</b><p>Teman • Santai • 9.1k percakapan</p><span class="badge">Santai</span></div></div>
-<div class="card" onclick="openChat('Yuki')"><img src="https://i.pravatar.cc/300?img=32"><div class="card-body"><b>Yuki</b><p>Teman • Belajar • 8.4k percakapan</p><span class="badge">Belajar</span></div></div>
-<div class="card" onclick="openChat('Kain')"><img src="https://i.pravatar.cc/300?img=59"><div class="card-body"><b>Kain</b><p>Teman • Fokus • 6.9k percakapan</p><span class="badge">Fokus</span></div></div>
-</div>
-<h2>Buat Teman AI Kamu Sendiri</h2>
-<button class="btn btn-blue" style="width:100%;padding:14px" onclick="showPage('buat')">+ Buat Teman AI Baru</button>
-</div>
+<div id="pg-eks" class="page on"><div class="chips" id="chips"></div><div class="grid" id="list"></div><p id="kosong" style="text-align:center;color:#666;padding:16px"></p></div>
+<div id="pg-lang" class="page"><div style="text-align:center;padding:30px 20px"><div style="font-size:50px">📦</div><h2 id="langJudul">Belum ada langganan.</h2></div><div id="kreatorList"></div></div>
+<div id="pg-chat" class="page"><div class="search">🔍 <input placeholder="Cari chat..." oninput="filterChat(this.value)"></div><div id="chatList"></div></div>
 
-<!-- CHAT -->
-<div id="page-chat" class="page">
-<h2 id="chatTitle">Chat AI Lysa</h2>
-<p style="font-size:12px;color:#666;margin-bottom:10px">Teman AI • Online • SUASANA - Obrolan santai, pagi yang sejuk</p>
-<div class="chat-box" id="chatBox">
-<div class="msg ai">Hai! Aku Lysa, teman AI-mu di Soyuai. Ada yang mau kamu ceritakan hari ini? Aku di sini dengerin kamu.</div>
-</div>
-<div class="input-row"><input id="chatInput" placeholder="Ketik pesan ke Lysa..."><button class="btn btn-blue" onclick="sendChat()">Kirim</button></div>
-</div>
+<!-- BUAT KARAKTER -->
+<div id="pg-buat" class="page">
+<div style="display:flex;justify-content:space-between;padding:12px 16px"><span onclick="go('eks')" style="font-size:22px;cursor:pointer">‹</span><b>Buat Karakter</b><span onclick="go('eks')" style="font-size:22px;cursor:pointer">✕</span></div>
+<div style="text-align:center;color:#888;font-size:13px" id="stepInfo">Langkah 1 dari 3 - Foto Karakter</div>
+<div id="step1" style="padding:0 16px">
+<div class="avatarBox" onclick="document.getElementById('fileFoto').click()"><span id="avatarPlaceholder" style="text-align:center"><div style="font-size:36px">+</div><p style="color:#aaa;margin-top:8px">gambar referensi</p></span><img id="avatarPreview" style="display:none"></div>
+<input type="file" id="fileFoto" accept="image/*" style="display:none" onchange="uploadGaleri(event)">
+<label>Deskripsi gambar</label><div class="gender"><div id="g-Pria" onclick="pilihGender('Pria')">Pria</div><div id="g-Perempuan" onclick="pilihGender('Perempuan')">Perempuan</div><div id="g-Non-biner" onclick="pilihGender('Non-biner')">Non-biner</div></div>
+<textarea id="f-deskGambar" rows="3" placeholder="Deskripsikan foto yang dihasilkan..."></textarea>
+<label>Gaya gambar</label><div style="display:flex;gap:10px;overflow-x:auto;padding:6px 0">
+<img class="styleImg" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300" onclick="pilihGaya(this,'Anime Lembut')">
+<img class="styleImg" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300" onclick="pilihGaya(this,'Realistis')">
+<img class="styleImg" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300" onclick="pilihGaya(this,'Anime Ceria')">
+<img class="styleImg" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300" onclick="pilihGaya(this,'Sinematik')"></div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin:10px 0"><span style="color:#888">Saya memiliki gambar yang tersedia.</span><button class="btn2" style="border:1px solid #d4e157;color:#d4e157" onclick="document.getElementById('fileFoto').click()">☁️ Unggah</button></div>
+<button class="btnY" onclick="hasilkanAI()">Hasilkan</button></div>
+<div id="step2" style="padding:0 16px;display:none"><div style="text-align:center"><img id="step2Img" style="width:130px;height:170px;object-fit:cover;border-radius:14px"><br><span style="color:#888;font-size:12px;cursor:pointer" onclick="keStep(1)">✏️ Edit avatar</span></div>
+<label style="display:block;margin-top:14px">Nama *</label><input id="f-nama" maxlength="80" placeholder="Berikan nama keren untuk bot Anda"><label>Pengantar *</label><textarea id="f-desk" rows="3" placeholder="Ini akan ditampilkan di kartu karakter..."></textarea><label>Kepribadian *</label><textarea id="f-kepribadian" rows="4" placeholder="Deskripsikan persona karakter Anda..."></textarea><button class="btnY" onclick="keStep(3)">Berikutnya</button></div>
+<div id="step3" style="padding:0 16px;display:none"><label>Pesan selamat datang *</label><textarea id="f-salam" rows="4" placeholder="Berikan pesan sambutan yang panjang dan menarik..."></textarea>
+<label>Izin *</label><div style="display:flex;gap:10px"><div style="flex:1"><div id="izin-Publik" style="background:#2a2a2e;padding:12px;border-radius:12px;text-align:center;cursor:pointer;outline:2px solid #d4e157" onclick="pilihIzin('Publik')">Publik ✅</div></div><div style="flex:1"><div id="izin-Pribadi" style="background:#2a2a2e;padding:12px;border-radius:12px;text-align:center;cursor:pointer" onclick="pilihIzin('Pribadi')">Pribadi ○</div></div></div>
+<label style="display:block;margin-top:14px">Suara</label><div style="background:#2a2a2e;padding:14px;border-radius:12px;display:flex;justify-content:space-between;cursor:pointer" onclick="pilihSuara('Narasi')"><div><b>Narasi</b><p style="color:#888;font-size:12px">Pilih suara untuk narasi Anda</p></div><span>›</span></div>
+<div style="background:#2a2a2e;padding:14px;border-radius:12px;display:flex;justify-content:space-between;margin-top:10px;cursor:pointer" onclick="pilihSuara('Karakter')"><div><b>Karakter</b><p style="color:#888;font-size:12px">Pilih suara untuk karakter Anda</p></div><span>›</span></div>
+<label style="display:block;margin-top:14px">Tag <span style="float:right;color:#888" id="tagCount">0/5</span></label><div style="background:#2a2a2e;padding:14px;border-radius:12px;display:flex;justify-content:space-between;cursor:pointer" onclick="openTag()"><span>Tandai jenis kelamin, spesies, dan sifat</span><span>›</span></div><p style="color:#888;font-size:12px;margin-top:8px">Tag dipilih: <span id="tagDipilih">-</span></p>
+<label>Kategori</label><input id="f-kat" placeholder="Untuk Anda / Musuh Menjadi Kekasih"><button class="btnY" onclick="simpanKarakter()">+ Buat Sekarang - Simpan di Aplikasi</button><p style="text-align:center;color:#888;font-size:12px;margin-top:10px" id="buatOlehTxt">Akan disimpan sebagai Dibuat oleh @cherry</p></div></div>
 
-<!-- BUAT -->
-<div id="page-buat" class="page">
-<h2>Buat Karakter Teman AI</h2>
-<p style="font-size:13px;color:#666;margin-bottom:12px">Kustomisasi Teman AI Kamu</p>
-<label>Nama</label><input id="fNama" placeholder="Contoh: Lysa">
-<label>Jenis Kelamin</label><select id="fGender"><option>Perempuan</option><option>Laki-laki</option><option>Non-biner</option></select>
-<label>Subjudul / Deskripsi (maks 1.000)</label><textarea id="fSub" rows="2" placeholder="Teman AI yang suportif, penuh empati..."></textarea>
-<label>Salam (maks 3.000)</label><textarea id="fSalam" rows="3" placeholder="Halo! Aku..."></textarea>
-<label>Memory Card</label><input placeholder="+ Tambah memori...">
-<label>Momen</label><input placeholder="Obrolan sehari-hari, dukungan mental...">
-<label>Musik</label><input placeholder="Lo-fi, Chill...">
-<label>Kategori</label><input placeholder="Support, Belajar, Santai">
-<label>Hashtag</label><input placeholder="#soyuai #temanai #support">
-<button class="btn btn-blue" style="width:100%;padding:14px" onclick="createFriend()">Buat Teman AI</button>
-<p id="buatResult" style="margin-top:10px;font-weight:700;color:#2563eb"></p>
-</div>
+<div id="pg-detail" class="page"><div style="display:flex;align-items:center;gap:12px;padding:10px 16px;position:sticky;top:0;background:#0f0f12"><span onclick="go('chat')" style="font-size:24px;cursor:pointer">‹</span><img id="d-img" style="width:38px;height:38px;border-radius:50%;object-fit:cover"><div><b id="d-nama">Nama</b><p id="d-kreator" style="color:#888;font-size:12px"></p></div><span style="margin-left:auto;cursor:pointer" onclick="openReport()">🚩</span><span style="cursor:pointer" onclick="openSetting()">⚙️</span></div><div style="padding:0 16px"><div id="d-intro"></div><div id="d-box"></div><div style="display:flex;gap:8px;position:sticky;bottom:0;background:#0f0f12;padding:10px 0"><input id="pesan" placeholder="Kirim pesan..." style="margin:0"><button class="btn2" style="background:#7c6cff" onclick="kirim()">➤</button></div><div style="display:flex;gap:8px;margin:10px 0 16px"><button onclick="pakaiStar(5,'Regenerasi Respon')" style="flex:1;background:#2a2a2e;color:#fff;border:0;padding:10px;border-radius:999px">🔄 Ulangi - 5 ⭐</button><button onclick="pakaiStar(10,'Bisikan Hati')" style="flex:1;background:#2a2a2e;color:#fff;border:0;padding:10px;border-radius:999px">💜 Bisikan Hati - 10 ⭐</button><button onclick="pakaiStar(50,'Model Saga')" style="flex:1;background:#2a2a2e;color:#fff;border:0;padding:10px;border-radius:999px">✨ Saga - 50 ⭐</button></div></div></div>
 
-<!-- OBROLAN -->
-<div id="page-obrolan" class="page">
-<h2>Obrolan</h2>
-<div class="card" onclick="openChat('Lysa')" style="display:flex;align-items:center;padding:10px;gap:10px"><img src="https://i.pravatar.cc/100?img=47" style="width:50px;height:50px;border-radius:50%"><div><b>Lysa</b><p>Aku temani kamu sampai ngopi virtual...</p></div></div>
-<br>
-<div class="card" onclick="openChat('Yuki')" style="display:flex;align-items:center;padding:10px;gap:10px"><img src="https://i.pravatar.cc/100?img=32" style="width:50px;height:50px;border-radius:50%"><div><b>Yuki</b><p>Take it easy, hehe. Aku di sini ya.</p></div></div>
-</div>
+<!-- PROFIL SAYA - CHERRY OWNER -->
+<div id="pg-saya" class="page"><div style="padding:16px">
+<div style="display:flex;align-items:center;gap:12px;cursor:pointer" onclick="openEditProfil()"><img id="profilFoto" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200" style="width:58px;height:58px;border-radius:50%;object-fit:cover"><div style="flex:1"><h2><span id="profilNama">Cherry</span> <span id="profilGenderIcon">♀</span></h2><div><span class="owner">👑 OWNER SOYUAI</span></div><p style="color:#888;font-size:13px;margin-top:4px" id="profilUser">@cherry • <span id="profilBioSingkat">Owner Soyuai</span></p><p style="color:#888;font-size:13px"><span id="profFollow">0</span> Pelanggan • <span id="profFollowing">0</span> Langganan</p></div><span>✏️</span></div>
+<div style="background:#1c1c20;padding:14px;border-radius:14px;margin-top:14px"><b>Bio</b><p style="color:#aaa;margin-top:6px" id="profilBio">Halo! Aku Cherry, owner Soyuai. Suka bikin karakter AI yang seru buat nemenin ngobrol.</p></div>
+<div style="display:flex;gap:10px;overflow-x:auto;margin:16px 0"><div style="min-width:280px;background:linear-gradient(135deg,#3a2f00,#1a1400);padding:16px;border-radius:16px"><b style="color:#f5c518">👑 Soyuai Premium</b><p style="color:#ddd;font-size:13px;margin:8px 0" id="premiumText">Belum berlangganan.</p><button class="starBtn" onclick="beliPremium()">Berlangganan</button></div><div style="min-width:280px;background:linear-gradient(135deg,#2a1a4a,#120a2a);padding:16px;border-radius:16px"><b style="color:#c9a6ff">👑 Soyuai Ultimate</b><p style="color:#ddd;font-size:13px;margin:8px 0">Memori Permanen + Semua Premium</p><button class="starBtn" style="background:#c9a6ff" onclick="beliPremium()">Berlangganan</button></div></div>
+<div style="background:#1c1c20;padding:14px;border-radius:16px"><div style="display:flex;justify-content:space-between;cursor:pointer" onclick="go('star')"><b>⭐ Star</b><span>⭐ <span id="starTxt">0</span> ›</span></div><div style="display:flex;gap:10px;margin-top:12px"><button class="btn2" style="flex:1" onclick="go('star')">Pembelian -84%</button><button class="btn2" style="flex:1" onclick="dapatGratis()">Hasilkan Gratis</button></div></div>
+<div style="background:linear-gradient(90deg,#7c6cff,#4a00ff);padding:14px;border-radius:16px;margin-top:12px;display:flex;justify-content:space-between"><b>💎 Batu Opal</b><span>💎 <span id="opalTxt">0</span> ›</span></div>
+<div style="background:#1c1c20;padding:16px;border-radius:16px;margin-top:12px;display:flex;justify-content:space-between;cursor:pointer" onclick="go('kreator')"><b>👥 Pusat Kreator</b><span>›</span></div>
+<div style="display:flex;gap:24px;margin:18px 0"><b id="t-kar" onclick="tabProfil('kar')">Karakter</b><b style="color:#888" id="t-gal" onclick="tabProfil('gal')">Galeri</b><b style="color:#888" id="t-kol" onclick="tabProfil('kol')">Koleksi</b></div><div id="profilList"></div>
+<button class="btn2" style="width:100%;margin-top:12px" onclick="openEditProfil()">✏️ Edit Profil - Informasi Pribadi</button>
+<button class="btn2" style="width:100%;margin-top:10px" onclick="openSetting()">⚙️ Pengaturan</button>
+<button class="btn2" style="width:100%;margin-top:10px" onclick="openFeedback()">💬 Masukan / Feedback</button>
+</div></div>
 
-<!-- PROFIL -->
-<div id="page-profil" class="page">
-<div class="profile-card">
-<div class="avatar">A</div>
-<h2 style="margin-top:10px">Amerta</h2>
-<p style="font-size:12px;color:#666">@amerta • Pengguna Soyuai • Teman AI</p>
-<p style="font-size:13px;margin-top:10px">Suka ngobrol dengan Teman AI untuk support, belajar, dan hiburan sehari-hari.</p>
-<div class="stats"><div><b>128</b><span>Percakapan</span></div><div><b>6</b><span>Teman AI</span></div><div><b>23</b><span>Chat Dimainkan</span></div></div>
-</div>
-</div>
-</div>
+<!-- EDIT PROFIL - INFORMASI PRIBADI -->
+<div id="pg-edit" class="page"><div style="padding:16px">
+<div style="display:flex;align-items:center;gap:10px"><span onclick="go('saya')" style="font-size:24px;cursor:pointer">‹</span><b style="flex:1;text-align:center">Informasi Pribadi</b><span style="width:24px"></span></div>
+<div style="text-align:center;margin:16px 0"><div style="position:relative;width:120px;margin:0 auto" onclick="document.getElementById('fileProfil').click()"><img id="editFotoPreview" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300" style="width:120px;height:120px;border-radius:50%;object-fit:cover"><div style="position:absolute;bottom:0;right:0;background:#2a2a2e;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center">✏️</div></div><input type="file" id="fileProfil" accept="image/*" style="display:none" onchange="uploadProfil(event)"><p style="color:#888;margin-top:8px" id="editID">ID: 9098227985 / IP: ID</p></div>
+<label>Nama Panggilan</label><input id="e-nama" maxlength="25" placeholder="Cherry" oninput="document.getElementById('namaEditCount').innerText=this.value.length+'/25'"><p style="text-align:right;color:#888;font-size:12px" id="namaEditCount">6/25</p>
+<p style="color:#888;font-size:12px">ⓘ Silakan masukan 3-25 karakter. Hanya huruf, emoji, angka, garis bawah, tanda hubung, apostrof, koma, dan spasi.</p>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px"><label>Jenis kelamin</label><label style="display:flex;gap:6px;align-items:center;color:#aaa;font-weight:400"><input type="checkbox" id="e-tampilGender" checked style="width:auto"> Tampilkan secara publik</label></div>
+<div class="gender" style="margin-top:8px"><div id="eg-Laki-laki" onclick="pilihGenderEdit('Laki-laki')">Laki-laki</div><div id="eg-Perempuan" onclick="pilihGenderEdit('Perempuan')">Perempuan</div><div id="eg-Non-biner" onclick="pilihGenderEdit('Non-biner')">Non-biner</div></div>
+<label style="display:block;margin-top:16px">Hari ulang tahun <span style="color:#888;font-weight:400">(Tidak bisa diedit)</span></label><input id="e-ultah" value="19 March 2002" disabled style="opacity:.6">
+<p style="color:#888;font-size:12px">ⓘ Informasi disimpan dengan aman. Tidak dibagikan ke publik.</p>
+<label style="display:block;margin-top:16px">Bio <span style="color:#888;font-weight:400">(Opsional)</span></label><textarea id="e-bio" rows="4" placeholder="Ceritain tentang kamu..."></textarea>
+<label>Username (untuk @ di karakter buatanmu)</label><input id="e-user" placeholder="@cherry">
+<button class="btn" onclick="simpanProfil()" style="background:#7c6cff;margin-top:10px">Simpan</button>
+<p style="text-align:center;color:#888;font-size:12px;margin-top:10px">Profil ini akan tampil di semua karakter yang kamu buat sebagai "Dibuat oleh @username"</p>
+</div></div>
 
-<nav>
-<button id="nav-beranda" class="active" onclick="showPage('beranda')">🏠 Beranda</button>
-<button id="nav-chat" onclick="showPage('chat')">💬 Obrolan</button>
-<button onclick="showPage('buat')" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:999px">+ Buat</button>
-<button id="nav-obrolan" onclick="showPage('obrolan')">💙 Chat</button>
-<button id="nav-profil" onclick="showPage('profil')">👤 Saya</button>
-</nav>
-
-<script>
-let currentFriend='Lysa';
-function toggleDark(){document.body.classList.toggle('dark')}
-function showPage(p){
-document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
-document.getElementById('page-'+p).classList.add('active');
-document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-}
-function openChat(name){
-currentFriend=name;
-document.getElementById('chatTitle').innerText='Chat AI '+name;
-document.getElementById('chatInput').placeholder='Ketik pesan ke '+name+'...';
-showPage('chat');
-let box=document.getElementById('chatBox');
-box.innerHTML=`<div class="msg ai">Hai! Aku ${name}, teman AI-mu di Soyuai. Ada yang mau kamu ceritakan hari ini?</div>`;
-}
-function sendChat(){
-let inp=document.getElementById('chatInput');
-let txt=inp.value.trim(); if(!txt) return;
-let box=document.getElementById('chatBox');
-box.innerHTML+=`<div class="msg me">${txt}</div>`;
-inp.value='';
-setTimeout(()=>{
-let replies=[
-`Aku ngerti banget, itu memang bikin lelah. Coba kita mulai dengan istirahat 5 menit, tarik napas, lalu buat 3 poin prioritas. Mau aku bantu susun?`,
-`Wah, ceritain lebih dong. Aku di sini dengerin kamu sampai selesai, gak buru-buru kok.`,
-`Kamu udah hebat banget hari ini, serius. Mau kita bikin rencana 30 menit pertama biar lebih fokus?`,
-`Take it easy ya. Aku temenin kamu sambil ngopi virtual. Kamu mau cerita yang seneng atau yang bikin pusing dulu?`
-];
-let r=replies[Math.floor(Math.random()*replies.length)];
-box.innerHTML+=`<div class="msg ai">${r}</div>`;
-box.scrollTop=box.scrollHeight;
-},600);
-}
-function createFriend(){
-let n=document.getElementById('fNama').value||'Teman Baru';
-document.getElementById('buatResult').innerText='Yeay! '+n+' berhasil dibuat dan siap diajak ngobrol di Soyuai! 💙';
-setTimeout(()=>openChat(n),800);
-}
-document.getElementById('chatInput').addEventListener('keypress',e=>{if(e.key==='Enter') sendChat()});
-</script>
-</body>
-  </html>
+<div id="pg-star" class="page"><div style="padding:16px"><div style="display:flex;align-items:center;gap:10px"><span onclick="go('saya')" style="font-size:24px;cursor:pointer">‹</span><b>Deskripsi Star</b><span style="margin-left:auto">⭐ <span id="starTxt2">0</span></span></div><div style="background:#1c1c20;padding:16px;border-radius:16px;margin:14px 0"><p>✦ Bisikan Hati - 10 ⭐</p><p style="margin-top:8px">✦ Buka Kunci Model Saga - 50 ⭐</p><p style="margin-top:8px">✦ Buka Kunci Model Premium - 100 ⭐</p><p style="margin-top:8px">✦ Regenerasi Respon AI - 5 ⭐</p><p style="margin-top:8px">✦ Hasilkan Foto AI - 10 ⭐</p></div><div style="display:flex;gap:10px"><div style="flex:1;background:#1c1c20;padding:14px;border-radius:14px;cursor:pointer" onclick="dapatGratis()"><b>Jam tangan</b><p style="color:#888;font-size:13px">Hingga 10 ⭐ / iklan!</p></div><div style="flex:1;background:#1c1c20;padding:14px;border-radius:14px;cursor:pointer" onclick="tugasHarian()"><b>Tugas Harian</b><p style="color:#888;font-size:13px">Menghasilkan 30 ⭐</p></div></div><h3 style="margin:16px 0">Beli Star</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="starCard">50 ⭐<button class="starBtn" onclick="beliStar(50)">Rp 24.500</button></div><div class="starCard">100 ⭐<button class="starBtn" onclick="beliStar(100)">Rp 53.000</button></div><div class="starCard" style="outline:2px solid #7c6cff">250 ⭐ - 84% OFF<button class="starBtn" style="background:#c9a6ff" onclick="beliStar(250)">Rp 77.000</button></div><div class="starCard">500 ⭐<button class="starBtn" onclick="beliStar(500)">Rp 210.000</button></div></div></div></div>
+<div id="pg-kreator" class="page"><div style="padding:16px"><span onclick="go('saya')" style="font-size:24px;cursor:pointer">‹</span><h2 style="margin:10px 0">Pusat Kreator</h2><div style="background:#1c1c20;padding:16px;border-radius:16px;margin-top:14px"><b>Total
